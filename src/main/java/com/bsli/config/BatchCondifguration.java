@@ -18,12 +18,14 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.LineTokenizer;
+import org.springframework.batch.item.xml.StaxEventItemReader;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import com.bsli.listener.HwJobExecutionListener;
 import com.bsli.listener.HwStepExecutionListener;
@@ -140,7 +142,29 @@ public class BatchCondifguration {
     
     //For Reading from csv files end
     
+    //Reading from XML Start
     
+    @StepScope
+    @Bean
+    public StaxEventItemReader xmlItemReader(){
+        // where to read the xml file
+        StaxEventItemReader reader = new StaxEventItemReader();
+        reader.setResource(new FileSystemResource("input/product.xml") );
+        //need to let reader to know which tags describe the domain object
+        reader.setFragmentRootElementName("product");
+
+        // tell reader how to parse XML and which domain object to be mapped
+        reader.setUnmarshaller(new Jaxb2Marshaller(){
+            {
+                setClassesToBeBound(Product.class);
+            }
+        });
+
+        return reader;
+
+    }
+    
+    //Reading from XML End
 //basic Step 1 start 
     @Bean
     public Step step1(){
@@ -164,8 +188,8 @@ public class BatchCondifguration {
                 <Integer,Integer>chunk(3)
               //  .reader(reader())//Reading Dataextraction reader
                // .reader(flatFileItemReader()) //read from Product.csv
-                .reader(flatFileItemReader1())
-                //.reader(cvsFileItemReader())
+             //   .reader(flatFileItemReader1())
+                .reader(xmlItemReader())//read from xml file
               //  .processor(dataExtractionProcessor)
                 .writer(new DataExtractionWriter())
                 .build();

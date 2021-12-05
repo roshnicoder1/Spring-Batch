@@ -2,9 +2,18 @@ package com.bsli.model;
 
 import java.math.BigDecimal;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Product {
 
     private Integer productID;
+
+    @XmlElement(name="productName")
     private String prodName;
   
     private BigDecimal price;
