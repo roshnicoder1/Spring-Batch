@@ -2,10 +2,10 @@ package com.bsli.model;
 
 import java.sql.Date;
 
-public class employee {
+public class Employee {
 	
 	String Series_reference;
-	Date Period;
+	Double Period;
 	Integer Data_value;
 	String Suppressed;
 	String STATUS;
@@ -16,16 +16,38 @@ public class employee {
 	String Series_title_1;
 	String Series_title_2;
 	String Series_title_3;
+	public Employee() {
+		super();
+	}
+	
+	public Employee(String series_reference, Double period, Integer data_value, String suppressed, String sTATUS,
+			String uNITS, String magnitude, String subject, String group, String series_title_1, String series_title_2,
+			String series_title_3) {
+		super();
+		Series_reference = series_reference;
+		Period = period;
+		Data_value = data_value;
+		Suppressed = suppressed;
+		STATUS = sTATUS;
+		UNITS = uNITS;
+		Magnitude = magnitude;
+		Subject = subject;
+		Group = group;
+		Series_title_1 = series_title_1;
+		Series_title_2 = series_title_2;
+		Series_title_3 = series_title_3;
+	}
+	
 	public String getSeries_reference() {
 		return Series_reference;
 	}
 	public void setSeries_reference(String series_reference) {
 		Series_reference = series_reference;
 	}
-	public Date getPeriod() {
+	public Double getPeriod() {
 		return Period;
 	}
-	public void setPeriod(Date period) {
+	public void setPeriod(Double period) {
 		Period = period;
 	}
 	public Integer getData_value() {
@@ -87,6 +109,13 @@ public class employee {
 	}
 	public void setSeries_title_3(String series_title_3) {
 		Series_title_3 = series_title_3;
+	}
+	@Override
+	public String toString() {
+		return "Employee [Series_reference=" + Series_reference + ", Period=" + Period + ", Data_value=" + Data_value
+				+ ", Suppressed=" + Suppressed + ", STATUS=" + STATUS + ", UNITS=" + UNITS + ", Magnitude=" + Magnitude
+				+ ", Subject=" + Subject + ", Group=" + Group + ", Series_title_1=" + Series_title_1
+				+ ", Series_title_2=" + Series_title_2 + ", Series_title_3=" + Series_title_3 + "]";
 	}
 	
 
